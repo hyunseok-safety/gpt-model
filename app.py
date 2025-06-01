@@ -1,4 +1,3 @@
-
 from flask import Flask, request, jsonify
 from tensorflow.keras.models import load_model
 from PIL import Image
@@ -50,6 +49,3 @@ def predict():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-if __name__ == '__main__':
-    app.run(debug=True)
