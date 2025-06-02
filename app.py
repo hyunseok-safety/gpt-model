@@ -52,4 +52,4 @@ def predict():
 
 @app.route("/", methods=["GET"])
 def home():
-    return "근골격계 부담
+    return "근골격계 부담작업 분류 모델 작동 중입니다."
