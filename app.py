@@ -34,4 +34,14 @@ def predict():
         confidence = float(predictions[top_idx])
 
         # GPT-friendly 응답 형식
-        retu
+        return jsonify({
+            'label': top_class,
+            'confidence': confidence
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route("/", methods=["GET"])
+def home():
+    return "근골격계 부담작업 분류 모델 작동 중입니다."
