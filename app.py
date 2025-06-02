@@ -34,7 +34,7 @@ def predict():
     try:
         # 이미지 전처리
         image = Image.open(file.stream).convert('RGB')
-        image = image.resize((224, 224))
+        image = image.resize((128, 128))
         image = np.array(image) / 255.0
         image = np.expand_dims(image, axis=0)
 
