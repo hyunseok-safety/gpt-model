@@ -8,7 +8,7 @@ app = Flask(__name__)
 # 모델 로드
 model = load_model("musculoskeletal_model.h5")
 
-# 클래스 이름 (형식: 1호: 키보드마우스)
+# 클래스 이름 (1호: 키보드마우스 형식)
 class_names = [
     "1호: 키보드마우스",
     "2호: 반복동작",
@@ -26,7 +26,8 @@ class_names = [
 @app.route('/predict', methods=['POST'])
 def predict():
     if 'file' not in request.files:
-        return jsonify({'error': '이미지 파일이 필요합니다'}), 400
+        print("❌ 오류: 'file' 파라미터가 request.files에 없습니다.")
+        return jsonify({'error': "이미지 파일이 누락되었습니다. 'file' 필드가 필요합니다."}), 400
 
     file = request.files['file']
     try:
@@ -42,13 +43,15 @@ def predict():
         top_class = class_names[top_idx]
         confidence = float(predictions[top_idx])
 
+        print(f"✅ 예측 완료: {top_class} ({confidence:.2f})")  # 로그 출력
         return jsonify({
             'label': top_class,
             'confidence': confidence
         })
 
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        print(f"❌ 예측 중 오류: {str(e)}")
+        return jsonify({'error': f"이미지 처리 중 오류 발생: {str(e)}"}), 500
 
 @app.route("/", methods=["GET"])
 def home():
