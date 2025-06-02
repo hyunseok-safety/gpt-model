@@ -8,10 +8,19 @@ app = Flask(__name__)
 # 모델 로드
 model = load_model("musculoskeletal_model.h5")
 
-# 클래스 이름 정의
+# 클래스 이름 (번호 포함)
 class_names = [
-  "키보드마우스", "반복동작", "팔머리위", "허리목굽힘", "쪼그리기",
-  "손가락쥠", "한손무거움", "25kg10회", "10kg25회", "4.5kg반복", "충격작업"
+    "키보드마우스(1호)",  # 1호
+    "반복동작(2호)",      # 2호
+    "팔머리위(3호)",      # 3호
+    "허리목굽힘(4호)",    # 4호
+    "쪼그리기(5호)",      # 5호
+    "손가락쥠(6호)",      # 6호
+    "한손무거움(7호)",    # 7호
+    "25kg10회(8호)",      # 8호
+    "10kg25회(9호)",      # 9호
+    "4.5kg반복(10호)",    # 10호
+    "충격작업(11호)"      # 11호
 ]
 
 @app.route('/predict', methods=['POST'])
@@ -33,7 +42,6 @@ def predict():
         top_class = class_names[top_idx]
         confidence = float(predictions[top_idx])
 
-        # GPT-friendly 응답 형식
         return jsonify({
             'label': top_class,
             'confidence': confidence
